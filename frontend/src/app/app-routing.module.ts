@@ -8,8 +8,7 @@ import { StatsComponent } from './stats/stats.component';
 const routes: Routes = [  { path: 'deck', component: DeckComponent },
 { path: 'add', component: AddComponent },
 { path: 'browse', component: BrowseComponent },
-{ path: 'stats', component: StatsComponent },
-{ path: '', redirectTo: '/deck', pathMatch: 'full' } // default route
+{ path: 'stats', component: StatsComponent }
 ];
 
 @NgModule({
