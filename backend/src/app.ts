@@ -1,21 +1,14 @@
 import express from 'express';
+import routes from './routes/routes'; // ajustez le chemin selon votre structure de dossiers
 
 const app = express();
-const port = 3000;
 
-var cors = require('cors');
-
-app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-var corsOptions = {
-  "origin": "http://localhost:4200",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}
-app.use(cors());
+// Utiliser le router pour toutes les routes
+app.use('/', routes);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
