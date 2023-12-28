@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { Card } from '../models/card';
 import { Deck } from '../models/deck';
+import { UserDeck } from '../models/userdeck';
+import { UserCard } from '../models/usercards';
 
 const router = Router();
 
@@ -8,7 +10,17 @@ const router = Router();
 router.get('/cards', async (req, res) => {
   try {
     const cards = await Card.findAll();
-    res.json(cards);
+    res.status(200).json(cards);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.get('/cards/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const cards = await Card.findAll({ where: { id: id} });
+    res.status(200).json(cards);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -17,22 +29,43 @@ router.get('/cards', async (req, res) => {
 router.post('/cards', async (req, res) => {
   try {
     const newCard = await Card.create(req.body);
-    res.status(201).json(newCard);
+    res.status(200).json(newCard);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
+router.put('/cards/:id',async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Card.update(req.body, { where: {id: id}});
+    res.status(200).send({
+      'message': 'Card updated successfully',
+    });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+})
+
 // Deck routes
 router.get('/decks', async (req, res) => {
   try {
     const decks = await Deck.findAll({ include: Card });
-    res.json(decks);
+    res.status(200).json(decks);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.get('/decks/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deck = await Deck.findAll({ include: Card, where: { id: id} });
+    res.status(200).json(deck);
   } catch (error) {
     res.status(500).send(error);
   }
 });
-
 router.post('/decks', async (req, res) => {
   try {
     const newDeck = await Deck.create(req.body);
@@ -42,6 +75,107 @@ router.post('/decks', async (req, res) => {
   }
 });
 
-// Add more routes as necessary for updating, deleting, etc.
+router.put('/decks/:id',async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Deck.update(req.body, { where: {id: id}});
+    res.status(200).send({
+      'message': 'Deck updated successfully',
+    });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+})
+
+// UserDeck routes
+router.get('/userdecks', async (req, res) => {
+  try {
+    const userdecks = await UserDeck.findAll({ include: [{
+      model: Deck,
+  }] });
+    res.status(200).json(userdecks);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.get('/userdecks/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const userdeck = await UserDeck.findAll({ include: [{
+      model: Deck,
+  }], where: {id: id}});
+    res.status(200).json(userdeck);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.post('/userdecks', async (req, res) => {
+  try {
+    const newUserDeck = await UserDeck.create(req.body);
+    res.status(200).json(newUserDeck);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.put('/userdecks/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await UserDeck.update(req.body,{ where: {id: id}})
+    res.status(200).send({
+      'message': 'Userdeck Updated successfully.'
+    })
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//UserCard routes
+router.get('/usercards', async (req, res) => {
+  try {
+    const usercards = await UserCard.findAll({ include: [{
+      model: Card,
+  }], });
+    res.status(200).json(usercards);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.get('/usercards/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const usercard = await UserCard.findAll({ include: [{
+      model: Card,
+  }], where: { id: id} });
+    res.status(200).json(usercard);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.post('/usercards', async (req, res) => {
+  try {
+    const newUserCard = await Deck.create(req.body);
+    res.status(200).json(newUserCard);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.put('/usercards/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    await UserCard.update(req.body,{ where: {id: id}})
+    res.status(200).send({
+      'message': 'Usercard Updated successfully'
+    })
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 export default router;

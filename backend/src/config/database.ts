@@ -10,9 +10,8 @@ const dbHost = process.env.DB_HOST || 'db';
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
   host: dbHost,
   port: 5432,
-  dialect: 'postgres',  // Utiliser le dialecte PostgreSQL
-  logging: false,       // Désactiver la journalisation pour une sortie plus propre
-  // Autres options de configuration selon les besoins
+  dialect: 'postgres', 
+  logging: false,      
 });
 
 export { sequelize };

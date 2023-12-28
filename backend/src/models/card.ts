@@ -1,12 +1,15 @@
 import { Model, DataTypes } from 'sequelize';
-import { sequelize } from '../config/database'; // Ajustez le chemin selon votre structure
+import { sequelize } from '../config/database';
+import { UserCard } from './usercards';
 
-export class Card extends Model {
-  public id!: number; // Note: le ! indique que ce champ ne sera jamais null.
+class Card extends Model {
+  public id!: number; 
   public recto!: string;
   public verso!: string;
-  public state!: string;
-  public weight!: number;
+
+  static associate(models: any) {
+    Card.belongsTo(models.Deck);
+  }
 }
 
 Card.init({
@@ -16,22 +19,20 @@ Card.init({
     primaryKey: true,
   },
   recto: {
-    type: new DataTypes.STRING(128),
+    type: new DataTypes.STRING(500),
     allowNull: false,
   },
   verso: {
     type: new DataTypes.STRING(128),
     allowNull: false,
-  },
-  state: {
-    type: new DataTypes.STRING(128),
-    allowNull: false,
-  },
-  weight: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
   }
 }, {
-  tableName: 'cards',
-  sequelize: sequelize, // passing the `sequelize` instance is required
+  tableName: 'card',
+  sequelize: sequelize, 
 });
+
+export { Card, associate as associateCard };
+
+function associate(models: any) {
+  Card.hasMany(models.UserCard);
+}

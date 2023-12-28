@@ -1,21 +1,28 @@
 import express from 'express';
-import routes from './routes/routes'; // ajustez le chemin selon votre structure de dossiers
-import { sequelize } from './config/database';
+import cors from 'cors';
+import routes from './routes/routes';
+import { initializeDatabase } from './config/db_init';
+import { testDB } from './config/db_test';
 
 const app = express();
 
 app.use(express.json());
 
-async function testDB() {
-  try {
-    await sequelize.authenticate();
-    console.log('DB connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-};
+var corsOptions = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
+app.use(cors(corsOptions));
 
 testDB();
+
+try {
+  initializeDatabase();
+} catch (error) {
+  console.error('Unable to initialize DB: ', error);
+}
 
 // Utiliser le router pour toutes les routes
 app.use('/', routes);

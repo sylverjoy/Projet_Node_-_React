@@ -1,12 +1,21 @@
 import { Model, DataTypes } from 'sequelize';
-import { sequelize } from '../config/database'; // Ajustez le chemin selon votre structure
+import { sequelize } from '../config/database'; 
 import { Card } from './card';
+import { UserDeck } from './userdeck';
 
-export class Deck extends Model {
+class Deck extends Model {
   public id!: number;
   public name!: string;
-  // autres champs selon vos besoins
+  public description: string | undefined;
+  public category: string | undefined;
+  public targetAudience: string | undefined;
+  public difficultyLevel!: string;
+
+  static associate(models: any) {
+    Deck.hasMany(models.Card);
+  }
 }
+
 
 Deck.init({
   id: {
@@ -17,12 +26,30 @@ Deck.init({
   name: {
     type: new DataTypes.STRING(128),
     allowNull: false,
+  },
+  description: {
+    type: new DataTypes.STRING(128),
+    allowNull: true,
+  },
+  category: {
+    type: new DataTypes.STRING(128),
+    allowNull: true,
+  },
+  targetAudience: {
+    type: new DataTypes.STRING(128),
+    allowNull: true,
+  },
+  difficultyLevel: {
+    type: new DataTypes.ENUM('Easy','Medium','Hard'),
+    allowNull: false,
   }
 }, {
-  tableName: 'decks',
-  sequelize: sequelize, // passing the `sequelize` instance is required
+  tableName: 'deck',
+  sequelize: sequelize, 
 });
 
-// Relations
-Deck.hasMany(Card);
-Card.belongsTo(Deck);
+export { Deck, associate as associateDeck };
+
+function associate(models: any) {
+  Deck.hasMany(models.UserDeck);
+}
