@@ -4,9 +4,10 @@ import { Card } from './card';
 
 export class UserCard extends Model {
   public id!: number;
-  public confidenceLevel!: string;
+  public confidenceLevel: string | undefined;
   public numberOfTimesReviewed!: number;
   public lastReviewedDate: string | undefined;
+  public nextReviewDate: string | undefined;
 
   static associate(models: any) {
     UserCard.belongsTo(models.Card);
@@ -24,9 +25,13 @@ UserCard.init({
     type: DataTypes.DATE,
     allowNull:true,
   },
+  nextReviewDate: {
+    type: DataTypes.DATE,
+    allowNull:true,
+  },
   confidenceLevel: {
     type: DataTypes.ENUM('Again','Hard','Good','Easy'),
-    allowNull: false,
+    allowNull: true,
     defaultValue: 'Again',
   },
   numberOfTimesReviewed: {
