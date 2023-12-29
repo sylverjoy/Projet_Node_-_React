@@ -123,7 +123,6 @@ export async function initializeDatabase() {
     // Create UserCard entries for all cards from the selected deck
     for (const card of await Card.findAll({where: {DeckId: userdeck.dataValues.DeckId}})) {
       const userCard = await UserCard.create({
-          confidenceLevel: 'Again',
           CardId: card.id,
       });
    }
