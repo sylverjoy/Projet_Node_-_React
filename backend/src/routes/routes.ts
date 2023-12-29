@@ -66,6 +66,7 @@ router.get('/decks/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 router.post('/decks', async (req, res) => {
   try {
     const newDeck = await Deck.create(req.body);

@@ -27,6 +27,8 @@ services:
     build: ./frontend
     ports:
       - "4200:4200"
+    volumes:
+      - ./frontend:/app # Montez le code source dans le conteneur
     depends_on:
       - backend
 
