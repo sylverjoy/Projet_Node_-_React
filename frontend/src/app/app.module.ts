@@ -7,6 +7,7 @@ import { DeckComponent } from './deck/deck.component';
 import { AddComponent } from './add/add.component';
 import { BrowseComponent } from './browse/browse.component';
 import { StatsComponent } from './stats/stats.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { StatsComponent } from './stats/stats.component';
     DeckComponent,
     AddComponent,
     BrowseComponent,
-    StatsComponent
+    StatsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
