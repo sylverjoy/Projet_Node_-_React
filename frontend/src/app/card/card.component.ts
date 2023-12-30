@@ -22,17 +22,52 @@ export class CardComponent implements OnInit {
       if (idParam !== null) {
         this.deckId = +idParam;
         this.apiService.getDeckById(this.deckId).subscribe((deck: any) => {
-          console.log(deck); // Pour vérifier la structure
+          console.log(deck); 
           if (deck[0].Cards) {
             console.log(deck[0].Cards)
             this.cards = deck[0].Cards;
           } else {
-            this.cards = []; // Initialise avec un tableau vide si deck.Cards est undefined
+            this.cards = []; 
             console.log('Aucune carte trouvée ou deck est indéfini');
           }
         });
       }
     });
+  }
+  isDeckCompleted: boolean = false;
+  confidenceLevels = {
+    Again: 0,
+    Hard: 0,
+    Good: 0,
+    Easy: 0
+  };
+  setConfidenceLevel(level: 'Again' | 'Hard' | 'Good' | 'Easy'): void {
+    let currentCard = this.cards[this.currentCardIndex];
+    currentCard.confidenceLevel = level;
+    this.confidenceLevels[level]++;
+    currentCard.numberOfTimesReviewed += 1;
+    currentCard.lastReviewedDate = new Date().toISOString();
+  
+    switch(level) {
+      case 'Again':
+        currentCard.nextReviewDate = 1;
+        break;
+      case 'Hard':
+        currentCard.nextReviewDate = 2;
+        break;
+      case 'Good':
+        currentCard.nextReviewDate = 3;
+        break;
+      case 'Easy':
+        currentCard.nextReviewDate = 4;
+        break;
+    }
+  
+    this.apiService.updateCard(currentCard.id, currentCard).subscribe(response => {
+      console.log('Carte mise à jour avec succès');
+    });
+  
+    this.loadNextCard();
   }
 
   loadNextCard(): void {
@@ -40,10 +75,9 @@ export class CardComponent implements OnInit {
       this.currentCardIndex++;
       this.showAnswer = false;
     } else {
-      console.log('Fin des cartes');
+      this.isDeckCompleted = true;
     }
   }
-
   toggleAnswer(): void {
     this.showAnswer = !this.showAnswer;
   }

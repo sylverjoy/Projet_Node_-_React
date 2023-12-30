@@ -3,6 +3,23 @@
     <p>Recto: {{ cards[currentCardIndex].recto }}</p>
     <p *ngIf="showAnswer">Verso: {{ cards[currentCardIndex].verso }}</p>
     <button (click)="toggleAnswer()">Answer</button>
-    <button *ngIf="currentCardIndex < cards.length - 1" (click)="loadNextCard()">Next Card</button>
   </div>
 </div>
+<div class="confidence-buttons">
+  <button (click)="setConfidenceLevel('Again')">Again</button>
+  <button (click)="setConfidenceLevel('Hard')">Hard</button>
+  <button (click)="setConfidenceLevel('Good')">Good</button>
+  <button (click)="setConfidenceLevel('Easy')">Easy</button>
+</div>
+
+<div *ngIf="isDeckCompleted">
+  <p>No more cards.</p>
+</div>
+
+<div class="confidence-levels">
+  <div class="confidence-count" style="color: red;">Again: {{ confidenceLevels.Again }}</div>
+  <div class="confidence-count" style="color: orange;">Hard: {{ confidenceLevels.Hard }}</div>
+  <div class="confidence-count" style="color: green;">Good: {{ confidenceLevels.Good }}</div>
+  <div class="confidence-count" style="color: blue;">Easy: {{ confidenceLevels.Easy }}</div>
+</div>
+
