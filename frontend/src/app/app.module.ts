@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +9,9 @@ import { AddComponent } from './add/add.component';
 import { BrowseComponent } from './browse/browse.component';
 import { StatsComponent } from './stats/stats.component';
 import { CardComponent } from './card/card.component';
+import { ApiService } from './api.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,9 +24,14 @@ import { CardComponent } from './card/card.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HighchartsChartModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    ApiService,
+    FormsModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
