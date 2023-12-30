@@ -1,0 +1,5 @@
+<div *ngIf="question">
+  <h2>{{ question }}</h2>
+  <button (click)="toggleAnswer()">Voir la réponse</button>
+  <p *ngIf="showAnswer">{{ answer }}</p>
+</div>

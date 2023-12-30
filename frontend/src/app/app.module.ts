@@ -8,6 +8,8 @@ import { AddComponent } from './add/add.component';
 import { BrowseComponent } from './browse/browse.component';
 import { StatsComponent } from './stats/stats.component';
 import { FormsModule } from '@angular/forms';
+import { CardComponent } from './card/card.component';
+
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     DeckComponent,
     AddComponent,
     BrowseComponent,
-    StatsComponent
+    StatsComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,
