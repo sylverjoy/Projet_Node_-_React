@@ -1,9 +1,5 @@
 <p>Let's create a new flashcard : </p>
 
-<select [(ngModel)]="selectedDeckId" name="deckSelect">
-    <option *ngFor="let deck of decks" [ngValue]="deck.id">{{ deck.name }}</option>
-  </select>
-  
 <div>
 <p>Recto</p>
 <input type="text" id="recto" name="recto" />
@@ -15,5 +11,5 @@
 </div>
 
 <div>
-<button (click)="addFlashcard()">Add</button>
+<button (click)="addFunction()">Add</button>
 </div>

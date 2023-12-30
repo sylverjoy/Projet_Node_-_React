@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-deck',
@@ -7,19 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./deck.component.css']
 })
 export class DeckComponent implements OnInit {
-  decks = [
-    { id: 1, name: 'Deck de Biologie' },
-    { id: 2, name: 'Deck de Histoire' },
-    { id: 3, name: 'Deck de Mathématiques' }
-  ];
+  decks: any;
 
-  constructor(private router: Router) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    // Les decks sont déjà initialisés ci-dessus pour les tests
-  }
-
-  onDeckSelect(deckId: string): void {
-    this.router.navigate(['/card', deckId]);
+    this.apiService.getAllDecks().subscribe((data:any) => {
+      this.decks = data;
+    });
   }
 }
