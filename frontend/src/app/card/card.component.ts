@@ -2,17 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 
-interface Card { id:string; recto: string; verso: string}
-
-interface Deck {
-  id: number;
-  name: string;
-  description: string ;
-  category: string ;
-  targetAudience: string ;
-  difficultyLevel: string;
-  Cards?: Card[]; 
-}
 
 @Component({
   selector: 'app-card',
@@ -21,7 +10,7 @@ interface Deck {
 })
 export class CardComponent implements OnInit {
   deckId: number | undefined;
-  cards: Card[] = [];
+  cards: any[] = [];
   currentCardIndex: number = 0;
   showAnswer: boolean = false;
 
@@ -33,11 +22,10 @@ export class CardComponent implements OnInit {
       if (idParam !== null) {
         this.deckId = +idParam;
         this.apiService.getDeckById(this.deckId).subscribe((deck: any) => {
-          const deckData: Deck = deck as Deck;
-          console.log(deckData); // Pour vérifier la structure
-          if (deckData && deckData.Cards) {
-            console.log(deckData.Cards)
-            this.cards = deckData.Cards;
+          console.log(deck); // Pour vérifier la structure
+          if (deck[0].Cards) {
+            console.log(deck[0].Cards)
+            this.cards = deck[0].Cards;
           } else {
             this.cards = []; // Initialise avec un tableau vide si deck.Cards est undefined
             console.log('Aucune carte trouvée ou deck est indéfini');
