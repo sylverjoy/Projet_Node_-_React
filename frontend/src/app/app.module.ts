@@ -10,6 +10,7 @@ import { BrowseComponent } from './browse/browse.component';
 import { StatsComponent } from './stats/stats.component';
 import { ApiService } from './api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     ApiService,
+    FormsModule
   ],
   bootstrap: [AppComponent]
 })
