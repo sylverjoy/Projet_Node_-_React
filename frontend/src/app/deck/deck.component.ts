@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deck',
@@ -9,11 +10,14 @@ import { ApiService } from '../api.service';
 export class DeckComponent implements OnInit {
   decks: any;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private router: Router,private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.apiService.getAllDecks().subscribe((data:any) => {
       this.decks = data;
     });
+  }
+  onDeckSelect(deckId: number): void {
+    this.router.navigate(['/card', deckId]);
   }
 }

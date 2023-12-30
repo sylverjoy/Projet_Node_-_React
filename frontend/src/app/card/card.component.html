@@ -1,5 +1,8 @@
-<div *ngIf="question">
-  <h2>{{ question }}</h2>
-  <button (click)="toggleAnswer()">Voir la réponse</button>
-  <p *ngIf="showAnswer">{{ answer }}</p>
+<div *ngIf="cards.length > 0">
+  <div class="card">
+    <p>Recto: {{ cards[currentCardIndex].recto }}</p>
+    <p *ngIf="showAnswer">Verso: {{ cards[currentCardIndex].verso }}</p>
+    <button (click)="toggleAnswer()">Answer</button>
+    <button *ngIf="currentCardIndex < cards.length - 1" (click)="loadNextCard()">Next Card</button>
+  </div>
 </div>

@@ -34,7 +34,7 @@ export class ApiService {
   }
 
   getDeckById(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/decks/${id}`);
+    return this.http.get<any[]>(`${this.baseUrl}/decks/${id}?include=Cards`);
   }
 
   createDeck(deck: any): Observable<any> {
