@@ -82,3 +82,5 @@ dehdzefho
 - Express - The backend framework
 - Sequelize - ORM for database interaction
 
+## Authors
+- Noémie Guisnel, Joy Sylver Yamsi, Mario Melon, Jason Lau
