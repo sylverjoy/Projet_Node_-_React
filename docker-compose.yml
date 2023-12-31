@@ -29,6 +29,7 @@ services:
       - "4200:4200"
     volumes:
       - ./frontend:/app # Montez le code source dans le conteneur
+      - /app/node_modules
     depends_on:
       - backend
 
